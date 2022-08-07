@@ -1,11 +1,19 @@
 # TaskTracker.Api
 
 TaskTracker is ASP.NET Core WebAPI project. .NET6 version
+
+## Features
+
+- Ability to create / view / edit / delete information about projects
+- Ability to create / view / edit / delete task information
+- Ability to add and remove tasks from a project (one project can contain several tasks)
+- Ability to view all tasks in the project
+
 ## Installation
 
 Project requires [.NET](https://dotnet.microsoft.com/en-us/) v6+ to run.
 
-Install the dependencies and devDependencies and start the server.
+Install the dependencies and start the server
 
 ```sh
 git clone https://github.com/effuone/TaskTracker.Api.git
