@@ -13,29 +13,24 @@ TaskTracker is ASP.NET Core WebAPI project. .NET6 version
 
 Project requires [.NET](https://dotnet.microsoft.com/en-us/) v6+ to run.
 
-Install the dependencies and start the server
+Install the dependencies and start the server using Docker
 
 ```sh
 git clone https://github.com/effuone/TaskTracker.Api.git
-cd TaskTracker.Api
+cd TaskTracker
+touch .env
 ```
-Add connection string to your database.
+To run this project, you will need to add the following environment variables to your .env file
 
-For Azure Data Studio or linux driven MSSQL
-```sh
-dotnet user-secrets set ConnectionStrings:TaskTrackerDb "Server=tcp:localhost;Database=TaskTrackerDb;User Id=[yourusename];Password=[yourpassword]"
-```
-For Windows SSMS (without authorization)
-```sh
-dotnet user-secrets set ConnectionStrings:TaskTrackerDb "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TaskTrackerDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
-```
+`DB_USER=SA`
 
-Revert migrations in databasse 
-```sh
-dotnet ef database update
-```
+`DB_PASSWORD=[YourPassword]`
+
+`DB_PORT=1433`
+
+`DB_DATABASE=TaskTrackerDb`
 
 Run project 
 ```sh
-dotnet run
+docker-compose up
 ```
