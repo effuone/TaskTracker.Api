@@ -10,7 +10,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //configuring MSSQL database connection string from secret store
-var connectionString = builder.Configuration.GetConnectionString("TaskTrackerDb");
+var server = builder.Configuration["DB_SERVER"];
+var port = builder.Configuration["DB_PORT"];
+var user = builder.Configuration["DB_USER"];
+var password = builder.Configuration["DB_PASSWORD"];
+var database = builder.Configuration["DB_DATABASE"];
+var connectionString = $"Server=tcp:{server}, {port};Database={database};User Id={user};Password={password}";                         
 builder.Services.AddDbContext<TaskContext>(options=>options.UseSqlServer(connectionString));
 
 //AutoMapper configuration
@@ -46,5 +51,7 @@ app.UseAuthorization();
 
 app.UseRouting();
 app.MapControllers();
+
+PrepDB.PrepPopulation(app);
 
 app.Run();
