@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using TaskTracker.Api.Context;
-using TaskTracker.Api.Interfaces;
-using TaskTracker.Api.Models;
+using TaskTracker.Data.Context;
+using TaskTracker.Domain.Interfaces;
+using TaskTracker.Data.Models;
 
-namespace TaskTracker.Api.Repositories
+namespace TaskTracker.Domain.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {

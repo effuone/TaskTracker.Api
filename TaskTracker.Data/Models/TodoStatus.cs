@@ -1,4 +1,4 @@
-namespace TaskTracker.Api.Models
+namespace TaskTracker.Data.Models
 {
     // task status types
     public enum TodoStatus

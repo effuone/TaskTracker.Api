@@ -1,8 +1,8 @@
 using AutoMapper;
-using TaskTracker.Api.DTOs;
-using TaskTracker.Api.Models;
+using TaskTracker.Data.DTOs;
+using TaskTracker.Data.Models;
 
-namespace TaskTracker.Api.AutoMapperProfiles
+namespace TaskTracker.Data.AutoMapperProfiles
 {
     //mapping profiles for data transfer objects
     public class ManagerProfiles : Profile

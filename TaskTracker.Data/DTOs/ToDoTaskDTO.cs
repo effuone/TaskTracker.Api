@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TaskTracker.Api.DTOs
+namespace TaskTracker.Data.DTOs
 {
     //data transfer objects of task entity
     public class ToDoTaskDTO

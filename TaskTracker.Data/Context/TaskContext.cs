@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using TaskTracker.Api.Models;
+using TaskTracker.Data.Models;
 
-namespace TaskTracker.Api.Context
+namespace TaskTracker.Data.Context
 {
     //EntityFrameworkCore database context configuration
     public class TaskContext : DbContext

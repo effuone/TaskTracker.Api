@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace TaskTracker.Api.Models
+namespace TaskTracker.Data.Models
 {
     //task entity domain model
     public class ToDoTask

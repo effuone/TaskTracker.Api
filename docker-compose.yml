@@ -7,7 +7,7 @@ services:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "1433:1433"
+      - "1450:1433"
   tasktrackerapi:
     image: tasktrackerapi
     build:

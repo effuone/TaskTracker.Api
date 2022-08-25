@@ -1,1 +1,9 @@
 .env
+/TaskTracker.Data/obj
+/TaskTracker.Data/bin
+/TaskTracker.Domain/bin
+/TaskTracker.Domain/obj
+/TaskTracker.Api/bin
+/TaskTracker.Api/obj
+/TaskTracker.UnitTests/bin
+/TaskTracker.UnitTests/obj

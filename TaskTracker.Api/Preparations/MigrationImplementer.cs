@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using TaskTracker.Data.Context;
 
-namespace TaskTracker.Api.Context
+namespace TaskTracker.Api.Preparations
 {
-    public static class PrepDB
+    public static class MigrationImplementer
     {
         public static void PrepPopulation(IApplicationBuilder app)
         {

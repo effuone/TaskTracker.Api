@@ -1,6 +1,6 @@
-using TaskTracker.Api.Models;
+using TaskTracker.Data.Models;
 
-namespace TaskTracker.Api.Interfaces
+namespace TaskTracker.Domain.Interfaces
 {
     //interface for task repository
     public interface ITaskRepository : IAsyncRepository<ToDoTask>

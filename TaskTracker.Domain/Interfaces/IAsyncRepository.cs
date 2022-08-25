@@ -1,4 +1,4 @@
-namespace TaskTracker.Api.Interfaces
+namespace TaskTracker.Domain.Interfaces
 {
     //common interface for basic CRUD in repositories
     public interface IAsyncRepository<T> where T: class

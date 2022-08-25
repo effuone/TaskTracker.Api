@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TaskTracker.Api.Context;
-using TaskTracker.Api.Interfaces;
-using TaskTracker.Api.Repositories;
+using TaskTracker.Api.Preparations;
+using TaskTracker.Data.Context;
+using TaskTracker.Domain.Interfaces;
+using TaskTracker.Domain.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,6 @@ app.UseAuthorization();
 app.UseRouting();
 app.MapControllers();
 
-PrepDB.PrepPopulation(app);
+MigrationImplementer.PrepPopulation(app);
 
 app.Run();

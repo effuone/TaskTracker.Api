@@ -1,4 +1,4 @@
-namespace TaskTracker.Api.Models
+namespace TaskTracker.Data.Models
 {
     //project status types
     public enum ProjectStatus
