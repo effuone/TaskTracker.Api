@@ -16,7 +16,7 @@ var port = builder.Configuration["DB_PORT"];
 var user = builder.Configuration["DB_USER"];
 var password = builder.Configuration["DB_PASSWORD"];
 var database = builder.Configuration["DB_DATABASE"];
-var connectionString = $"Server=tcp:{server}, {port};Database={database};User Id={user};Password={password}";                         
+var connectionString = $"Server=tcp:{server}, {port};Database={database};User Id={user};Password={password}";
 builder.Services.AddDbContext<TaskContext>(options=>options.UseSqlServer(connectionString));
 
 //AutoMapper configuration
@@ -36,13 +36,15 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
     app.UseSwaggerUI();
     app.UseHttpsRedirection();
 }
 else
 {
+    app.UseSwaggerUI();
+    app.UseSwagger();
     app.UseHsts();
 }
 
@@ -53,6 +55,6 @@ app.UseAuthorization();
 app.UseRouting();
 app.MapControllers();
 
-MigrationImplementer.PrepPopulation(app);
+await MigrationImplementer.PrepPopulation(app);
 
 app.Run();

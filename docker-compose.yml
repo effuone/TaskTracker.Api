@@ -12,7 +12,7 @@ services:
     image: tasktrackerapi
     build:
       context: .
-      dockerfile: TaskTracker.Api/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - 8080:80
     depends_on:

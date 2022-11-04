@@ -16,6 +16,11 @@ namespace TaskTracker.Data.Context
         }
         public DbSet<ToDoTask> Tasks {get; set;}
         public DbSet<Project> Projects {get; set;}
+        //uncomment this code for migrations using dotnet ef migrations add "name"
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseSqlServer("");
+        // }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
