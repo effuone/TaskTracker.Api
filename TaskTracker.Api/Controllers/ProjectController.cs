@@ -11,13 +11,11 @@ namespace TaskTracker.Api.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly IProjectRepository _projectRepository;
-        private readonly ITaskRepository _taskRepository;
         private readonly IMapper _mapper;
 
-        public ProjectController(IProjectRepository projectRepository, ITaskRepository taskRepository, IMapper mapper)
+        public ProjectController(IProjectRepository projectRepository, IMapper mapper)
         {
             _projectRepository = projectRepository;
-            _taskRepository = taskRepository;
             _mapper = mapper;
         }
         [HttpPost]
@@ -28,8 +26,7 @@ namespace TaskTracker.Api.Controllers
             {
                 return BadRequest();
             }
-            var entity = new Project();
-            entity = _mapper.Map<CreateProjectDTO, Project>(projectDTO, entity);
+            var entity = _mapper.Map<CreateProjectDTO, Project>(projectDTO, new Project());
             entity.Status = ProjectStatus.Active;
             entity.ProjectId = await _projectRepository.CreateAsync(entity);
             return CreatedAtAction(nameof(GetProjectAsync), new { id = entity.ProjectId }, entity);
@@ -37,23 +34,9 @@ namespace TaskTracker.Api.Controllers
         [HttpGet]
         public async Task<IEnumerable<ProjectDTO>> GetProjectsAsync()
         {
-            var models = await _projectRepository.GetAllAsync();
-            var viewModels = new List<ProjectDTO>();
-            foreach (var model in models)
-            {
-                var projectDTO = new ProjectDTO();
-                model.Tasks = await _taskRepository.GetAllAsync(model.ProjectId);
-                projectDTO = _mapper.Map<Project, ProjectDTO>(model, projectDTO);
-                var taskDTOs = new List<ToDoTaskDTO>();
-                foreach(var task in model.Tasks)
-                {
-                    var taskDto = new ToDoTaskDTO();
-                    taskDTOs.Add(_mapper.Map<ToDoTask, ToDoTaskDTO>(task, taskDto));
-                }
-                projectDTO.ToDoTasks = taskDTOs;
-                viewModels.Add(projectDTO);
-            }
-            return viewModels;
+            return (await _projectRepository.GetAllAsync()).Select(project=>{
+                return _mapper.Map<Project, ProjectDTO>(project, new ProjectDTO());
+            });
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<ProjectDTO>> GetProjectAsync(int id)
@@ -63,15 +46,8 @@ namespace TaskTracker.Api.Controllers
             {
                 return NotFound();
             }
-            model.Tasks = await _taskRepository.GetAllAsync(id);
-
-            var projectDTO = _mapper.Map<Project, ProjectDTO>(model, new ProjectDTO());
-            
-            projectDTO.ToDoTasks = model.Tasks.Select(x=>{
-                var taskDto = new ToDoTaskDTO();
-                return _mapper.Map<ToDoTask, ToDoTaskDTO>(x, taskDto);
-            });
-            return Ok(projectDTO);
+            // return Ok(model);
+            return Ok(_mapper.Map<Project, ProjectDTO>(model, new ProjectDTO()));
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProjectAsync(int id, UpdateProjectDTO projectDTO)

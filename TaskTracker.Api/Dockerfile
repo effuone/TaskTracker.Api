@@ -4,8 +4,8 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
-COPY ["TaskTracker.Api/TaskTracker.Data.csproj", "TaskTracker.Data/"]
-COPY ["TaskTracker.Api/TaskTracker.Domain.csproj", "TaskTracker.Domain/"]
+COPY ["TaskTracker.Data/TaskTracker.Data.csproj", "TaskTracker.Data/"]
+COPY ["TaskTracker.Domain/TaskTracker.Domain.csproj", "TaskTracker.Domain/"]
 COPY ["TaskTracker.Api/TaskTracker.Api.csproj", "TaskTracker.Api/"]
 RUN dotnet restore "TaskTracker.Api/TaskTracker.Api.csproj"
 COPY . .

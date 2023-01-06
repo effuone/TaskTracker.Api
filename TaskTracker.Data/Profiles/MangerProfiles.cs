@@ -17,7 +17,7 @@ namespace TaskTracker.Data.AutoMapperProfiles
             //Mapping project entity models
             CreateMap<CreateProjectDTO, Project>();
             CreateMap<UpdateProjectDTO, Project>();
-            CreateMap<Project, ProjectDTO>();
+            CreateMap<Project, ProjectDTO>().ForMember(dest=>dest.ToDoTasks, opt=>opt.MapFrom(src=>src.Tasks));
         }
     }
 }

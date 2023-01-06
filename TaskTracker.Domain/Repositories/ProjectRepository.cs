@@ -38,17 +38,31 @@ namespace TaskTracker.Domain.Repositories
 
         public async Task<IEnumerable<Project>> GetAllAsync()
         {
-            return await _context.Projects.ToListAsync();
+            var projects = await _context.Projects.ToListAsync();
+            foreach (var project in projects)
+            {
+                project.Tasks = await _context.Tasks.Where(task=>task.ProjectId == project.ProjectId).ToListAsync();
+            }
+            return projects;
         }
 
         public async Task<Project> GetAsync(int id)
         {
-            return await _context.Projects.FindAsync(id);
+            var project = await _context.Projects.FindAsync(id);
+            if(project is null)
+            {
+                return null;
+            }
+            project.Tasks = await _context.Tasks.Where(task=>task.ProjectId == id).ToListAsync();
+            return project;
         }
 
         public async Task<Project> GetAsync(string name)
         {
-            return await _context.Projects.Where(x=>x.ProjectName == name).FirstOrDefaultAsync();
+            var project = await _context.Projects.Where(project=>project.ProjectName == name).FirstOrDefaultAsync();
+            if(project is null) return null;
+            project.Tasks = await _context.Tasks.Where(task=>task.ProjectId == project.ProjectId).ToListAsync();
+            return project;
         }
 
         public async Task RemoveTaskFromProject(int taskId)
