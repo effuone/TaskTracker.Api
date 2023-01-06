@@ -10,17 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    //configuring MSSQL database connection string from secret store
-    var server = builder.Configuration["DB_SERVER"];
-    var port = builder.Configuration["DB_PORT"];
-    var user = builder.Configuration["DB_USER"];
-    var password = builder.Configuration["DB_PASSWORD"];
-    var database = builder.Configuration["DB_DATABASE"];
-    var connectionString = $"Server=tcp:{server}, {port};Database={database};User Id={user};Password={password}";
-    Console.WriteLine(connectionString);
-    Console.WriteLine(connectionString);
-    Console.WriteLine(connectionString);
-    builder.Services.AddDbContext<TaskContext>(options=>options.UseSqlServer(connectionString));
+//configuring MSSQL database connection string from secret store
+var server = builder.Configuration["DB_SERVER"];
+var port = builder.Configuration["DB_PORT"];
+var user = builder.Configuration["DB_USER"];
+var password = builder.Configuration["DB_PASSWORD"];
+var database = builder.Configuration["DB_DATABASE"];
+var connectionString = $"Server=tcp:{server}, {port};Database={database};User Id={user};Password={password}";                         
+builder.Services.AddDbContext<TaskContext>(options=>options.UseSqlServer(connectionString));
 
     //AutoMapper configuration
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -42,6 +39,7 @@ var app = builder.Build();
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
+        app.UseDeveloperExceptionPage();
         app.UseSwaggerUI();
         app.UseHttpsRedirection();
     }
@@ -49,6 +47,8 @@ var app = builder.Build();
     {
         app.UseHsts();
     }
+
+    app.UseHttpsRedirection();
 
     app.UseAuthorization();
 
