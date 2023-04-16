@@ -19,17 +19,17 @@ namespace TaskTracker.Api.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<ActionResult<ProjectDTO>> PostProjectAsync([FromForm]CreateProjectDTO projectDTO)
+        public async Task<ActionResult<ProjectDTO>> CreateProjectAsync([FromForm]CreateProjectDTO createProjectDTO)
         {
-            var existingModel = await _projectRepository.GetAsync(projectDTO.ProjectName);
-            if(existingModel is not null)
-            {
-                return BadRequest();
-            }
-            var entity = _mapper.Map<CreateProjectDTO, Project>(projectDTO, new Project());
-            entity.Status = ProjectStatus.Active;
-            entity.ProjectId = await _projectRepository.CreateAsync(entity);
-            return CreatedAtAction(nameof(GetProjectAsync), new { id = entity.ProjectId }, entity);
+            Project existingProject = await _projectRepository.GetAsync(createProjectDTO.ProjectName);
+            if(existingProject != null)
+                return BadRequest("A project with the same name already exists.");
+
+            Project newProject = _mapper.Map<CreateProjectDTO, Project>(createProjectDTO);
+            newProject.Status = ProjectStatus.Active;
+
+            int projectId = await _projectRepository.CreateAsync(newProject);
+            return CreatedAtAction(nameof(GetProjectAsync), new { id = projectId }, newProject);
         }
         [HttpGet]
         public async Task<IEnumerable<ProjectDTO>> GetProjectsAsync()
@@ -43,10 +43,7 @@ namespace TaskTracker.Api.Controllers
         {
             var model = await _projectRepository.GetAsync(id);
             if(model is null)
-            {
                 return NotFound();
-            }
-            // return Ok(model);
             return Ok(_mapper.Map<Project, ProjectDTO>(model, new ProjectDTO()));
         }
         [HttpPut("{id}")]
@@ -54,9 +51,7 @@ namespace TaskTracker.Api.Controllers
         {
             var model = await _projectRepository.GetAsync(id);
             if(model is null)
-            {
                 return NotFound();
-            }
             model = _mapper.Map<UpdateProjectDTO, Project>(projectDTO, model);
             await _projectRepository.UpdateAsync(id, model);
             return NoContent();
@@ -66,9 +61,7 @@ namespace TaskTracker.Api.Controllers
         {
             var model = await _projectRepository.GetAsync(id);
             if(model is null)
-            {
                 return NotFound();
-            }
             await _projectRepository.DeleteAsync(id);
             return NoContent();
         }

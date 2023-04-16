@@ -55,7 +55,7 @@ var app = builder.Build();
     app.UseRouting();
     app.MapControllers();
 
-    MigrationImplementer.PrepPopulation(app);
+    await MigrationImplementer.PrepPopulation(app);
 
     app.Run();
 }
