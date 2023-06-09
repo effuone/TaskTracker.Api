@@ -1,5 +1,7 @@
 # TaskTracker.Api
 
+This is a boilerplate template repository for beginners, specifically designed for .NET API development, using the example of the simple Todo backend application. It follows a clean architecture pattern to ensure a well-structured codebase.
+
 TaskTracker is ASP.NET Core WebAPI project. .NET6 version
 
 ## Features
